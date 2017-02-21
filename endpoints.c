@@ -45,9 +45,9 @@ static int handle_get_well_known_core(coap_rw_buffer_t *scratch, const coap_pack
 }
 
 static const coap_endpoint_path_t path_light = {1, {"light"}};
-static const coap_endpoint_path_t path_voltage = {2, {"id_ublox_1234567890" , "voltage"}};
-static const coap_endpoint_path_t path_current = {2, {"id_ublox_1234567890" , "current"}};
-static const coap_endpoint_path_t path_data = {2, {"id_ublox_1234567890" , "data"}};
+static const coap_endpoint_path_t path_voltage = {2, {"353161072767299" , "voltage"}};
+static const coap_endpoint_path_t path_current = {2, {"353161072767299" , "current"}};
+static const coap_endpoint_path_t path_data = {2, {"353161072767299" , "data"}};
 
 static int handle_get_light(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, coap_packet_t *outpkt, uint8_t id_hi, uint8_t id_lo)
 {
