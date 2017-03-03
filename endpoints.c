@@ -55,10 +55,12 @@ static int handle_get_msgID(coap_rw_buffer_t *scratch, const coap_packet_t *inpk
     FILE *fd;
     uint8_t ch1, ch2 ;
     char buffer_random[5];
-    fd = fopen("/dev/random", "r");
+    fd = fopen("/dev/urandom", "r");
     if (fd == NULL) exit(EXIT_FAILURE);
     ch1 = getc(fd);
     ch2 = getc(fd);
+    voltage=getc(fd);
+    current=getc(fd);
     fclose(fd);
 
     sprintf(buffer_random, "%02X%02X", ch1, ch2);
@@ -87,7 +89,7 @@ static int handle_get_msgID(coap_rw_buffer_t *scratch, const coap_packet_t *inpk
 static int handle_get_voltage(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, coap_packet_t *outpkt, uint8_t id_hi, uint8_t id_lo)
 {
     if (itoa(voltage, buffer)) {
-        return coap_make_response(scratch, outpkt, buffer, strlen(buffer), id_hi, id_lo, &inpkt->tok, COAP_RSPCODE_CONTENT, COAP_CONTENTTYPE_TEXT_PLAIN);
+        return coap_make_response(scratch, outpkt, (const uint8_t *)&buffer, strlen(buffer), id_hi, id_lo, &inpkt->tok, COAP_RSPCODE_CONTENT, COAP_CONTENTTYPE_TEXT_PLAIN);
     }
     else
     {
@@ -100,7 +102,7 @@ static int handle_get_voltage(coap_rw_buffer_t *scratch, const coap_packet_t *in
 static int handle_get_current(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, coap_packet_t *outpkt, uint8_t id_hi, uint8_t id_lo)
 {
     if (itoa(current, buffer)) {
-        return coap_make_response(scratch, outpkt, buffer, strlen(buffer), id_hi, id_lo, &inpkt->tok, COAP_RSPCODE_CONTENT, COAP_CONTENTTYPE_TEXT_PLAIN);
+        return coap_make_response(scratch, outpkt, (const uint8_t *)&buffer, strlen(buffer), id_hi, id_lo, &inpkt->tok, COAP_RSPCODE_CONTENT, COAP_CONTENTTYPE_TEXT_PLAIN);
     }
     else
     {
